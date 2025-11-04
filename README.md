@@ -99,5 +99,3 @@ Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 
 ##
 
-port=3000
-SALT=7

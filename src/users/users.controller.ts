@@ -1,10 +1,26 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  UseFilters,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { userDTO } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsergurdGuard } from './usergurd/usergurd.guard';
+import { RolesGuard } from 'src/guard/roles/Role.guard';
+import { Role } from 'src/guard/roles/rolse.enum';
+import { Roles } from 'src/guard/roles/roles.decorator';
+import { UserFilterFilter } from './filters/user.filter/user.filter.filter';
 
 @Controller('users')
+@UseFilters(UserFilterFilter)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -13,6 +29,18 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
+  @Get('/:shamim')
+  eitayhobe(@Param('shamim', ParseIntPipe) shamim: number) {
+    return 'thik ache';
+  }
+
+  @Get('/test')
+  Testing() {
+    return 'user geting succesfully ';
+  }
+
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
   @Get()
   findAll() {
     return this.usersService.findAll();

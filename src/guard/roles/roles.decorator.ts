@@ -4,4 +4,4 @@ export class rolesDecorator {}
 
 export const ROLSE_KEY = 'roles';
 
-export const Rolse = (...rolesd: string[]) => SetMetadata(ROLSE_KEY, rolesd);
+export const Roles = (...rolesd: string[]) => SetMetadata(ROLSE_KEY, rolesd);
