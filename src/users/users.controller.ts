@@ -13,7 +13,6 @@ import {
 import { UsersService } from './users.service';
 import { userDTO } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { UsergurdGuard } from './usergurd/usergurd.guard';
 import { RolesGuard } from 'src/guard/roles/Role.guard';
 import { Role } from 'src/guard/roles/rolse.enum';
 import { Roles } from 'src/guard/roles/roles.decorator';
@@ -25,8 +24,8 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  create(@Body() createUserDto: userDTO) {
-    return this.usersService.create(createUserDto);
+  async create(@Body() createUserDto: userDTO) {
+    return await this.usersService.create(createUserDto);
   }
 
   @Get('/:shamim')
@@ -42,22 +41,23 @@ export class UsersController {
   @UseGuards(RolesGuard)
   @Roles(Role.Admin)
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  async findAll() {
+    return await this.usersService.findAll();
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.usersService.findOne(+id);
-  // }
+  @Get(':id')
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    return await this.usersService.findOne(id);
+  }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-  //   return this.usersService.update(+id, updateUserDto);
-  // }
+  @Patch(':id')
+  async update(@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: UpdateUserDto) {
+    return await this.usersService.update(id, updateUserDto);
+  }
 
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.usersService.remove(+id);
-  // }
+  @Delete(':id')
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    return await this.usersService.remove(id);
+  }
 }
+ 
